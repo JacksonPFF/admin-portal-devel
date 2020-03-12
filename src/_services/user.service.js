@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 import config from 'config';
 import { authHeader } from '../_helpers';
 
@@ -9,18 +11,24 @@ export const userService = {
 
 function login(email, password) {
     const requestOptions = {
+        url: `${config.apiUrl}/auth`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        data: JSON.stringify({ email, password })
     };
 
-    return fetch(`${config.apiUrl}/auth`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
+    return axios(requestOptions)
+        //.then(handleResponse)
+        .then(response => {
+            const user = response.data.user;
+            user.token = response.data.token;
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
 
             return user;
+        }) 
+        .catch(function (error) {
+          errorHandler(error);
         });
 }
 
@@ -31,27 +39,47 @@ function logout() {
 
 function getAll() {
     const requestOptions = {
+        url: `${config.apiUrl}/gitas`,
         method: 'GET',
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/gitas`, requestOptions).then(handleResponse);
+    return axios(requestOptions)
+    .then(response => {
+          const data = response.data;
+
+          return data;
+      }) 
+      .catch(function (error) {
+        errorHandler(error);
+      });
 }
 
-function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                logout();
-                location.reload(true);
-            }
-
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
-    });
+function errorHandler(error) {
+  if (error.response) {
+    if (error.response.status === 401) {
+      // auto logout if 401 response returned from api
+      logout();
+      location.reload(true);
+    }
+  }
+  console.log(error);
 }
+
+// function handleResponse(response) {
+//     return response.text().then(text => {
+//         const data = text && JSON.parse(text);
+//         if (!response.ok) {
+//             if (response.status === 401) {
+//                 // auto logout if 401 response returned from api
+//                 logout();
+//                 location.reload(true);
+//             }
+
+//             const error = (data && data.message) || response.statusText;
+//             return Promise.reject(error);
+//         }
+
+//         return data;
+//     });
+// }
