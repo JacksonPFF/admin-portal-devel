@@ -12,7 +12,14 @@ class HomePage extends React.Component {
     render() {
         const { user, users } = this.props;
         return (
-            <div className="col-md-8 col-md-offset-">
+            <div className="col-md-8 offset-md-2">
+                <img src={user.user.profilePicture} 
+                    class="
+                        img-fluid 
+                        rounded-circle
+                        w-25
+                        mb-3" 
+                    alt="Profile Picture"></img>
                 <h1>Hi {user.user.firstName}!</h1>
                 <p>You're logged in with React & JWT!!</p>
                 <h3>Gitas from secure api end point:</h3>
