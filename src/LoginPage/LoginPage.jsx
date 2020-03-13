@@ -28,6 +28,7 @@ class LoginPage extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        event.target.className += " was-validated";
 
         this.setState({ submitted: true });
         const { email, password } = this.state;
@@ -47,20 +48,16 @@ class LoginPage extends React.Component {
                     Password: test
                 </div> */}
                 <h2>Login</h2>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+                <form name="form" className="needs-validation" onSubmit={this.handleSubmit} noValidate>
+                    <div className={'form-group' + (submitted && !email ? ' has-danger' : '')}>
                         <label htmlFor="email">Email</label>
-                        <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
-                        {submitted && !email &&
-                            <div className="help-block">Email is required</div>
-                        }
+                        <input type="text" className="form-control" name="email" required value={email} onChange={this.handleChange} />
+                        <div className="invalid-feedback">Email is required</div>
                     </div>
-                    <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+                    <div className={'form-group' + (submitted && !password ? ' has-danger' : '')}>
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-                        {submitted && !password &&
-                            <div className="help-block">Password is required</div>
-                        }
+                        <input type="password" className="form-control" name="password" required value={password} onChange={this.handleChange} />
+                        <div className="invalid-feedback">Password is required</div>
                     </div>
                     <div className="form-group">
                         <button className="btn btn-primary">Login</button>
