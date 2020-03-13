@@ -50,7 +50,7 @@ class LoginPage extends React.Component {
                 <h2>Login</h2>
                 <form name="form" className="needs-validation" onSubmit={this.handleSubmit} noValidate>
                     <div className={'form-group' + (submitted && !email ? ' has-danger' : '')}>
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">Email or Username</label>
                         <input type="text" className="form-control" name="email" required value={email} onChange={this.handleChange} />
                         <div className="invalid-feedback">Email is required</div>
                     </div>
