@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { userActions } from '../_actions';
+//import { endpointConstants } from '../_constants';
 
 class HomePage extends React.Component {
     componentDidMount() {
         this.props.dispatch(userActions.getAll());
+        //this.props.dispatch(userActions.getAll(endpointConstants.USER_ENDPOINT));
+        //this.props.dispatch(userActions.getAll(endpointConstants.REGISTRATION_ENDPOINT));
     }
 
     render() {
@@ -28,8 +31,8 @@ class HomePage extends React.Component {
                 {users.items &&
                     <ul>
                         {users.items.map((user, index) =>
-                            <li key={user.id}>
-                                {user.name}
+                            <li key={user.serial}>
+                                {user.output}
                             </li>
                         )}
                     </ul>
