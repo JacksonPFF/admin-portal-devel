@@ -27,8 +27,12 @@ class HomePage extends React.Component {
                 {users.items &&
                     <ul>
                         {users.items.map((user, index) =>
-                            <li key={user.serial}>
-                                {user.output}
+                            <li key={user.serial} className="mb-3">
+                                <div>{user.output.serial}</div> 
+                                <div>{user.output.className}</div>
+                                <div>{user.output.registeredByUsername}</div>
+                                <div>{user.output.registeredByEmail}</div>
+                                <div>{user.output.created}</div>
                             </li>
                         )}
                     </ul>

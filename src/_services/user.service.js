@@ -94,7 +94,13 @@ function findRegsiteredGitas(users, gitas, registrations){
         var registered_user = _.find(users, ['id', element["user"]]);
         output.push({
           "serial": registered_gita["serial"].slice(-5),
-          "output": "serial: " + registered_gita["serial"] + " name: " + registered_gita["name"] + "\n    registered by: " + registered_user["username"] + ", " + registered_user["email"] + "\n    on: " + element["created"] + "\n",
+          "output": {
+                      "serial": registered_gita["serial"],
+                      "name": registered_gita["name"],
+                      "registeredByUsername": registered_user["username"],
+                      "registeredByEmail": registered_user["email"],
+                      "created": element["created"],
+                    },
           "csv_output": "s" + registered_gita["serial"] + "," + registered_gita["name"] + "," + registered_user["username"] + "," + registered_user["email"] + "," + element["created"] + "\n"
         });
       }
