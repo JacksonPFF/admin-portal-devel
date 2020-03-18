@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import { userActions } from '../_actions';
 
 class LoginPage extends React.Component {
@@ -42,11 +41,7 @@ class LoginPage extends React.Component {
     const { loggingIn } = this.props;
     const { email, password, submitted } = this.state;
     return (
-      <div className="col-md-6 offset-md-3">
-        {/* <div className="alert alert-info">
-                    Email: test<br />
-                    Password: test
-                </div> */}
+      <div className="col-md-4 offset-md-4">
         <h2>Login</h2>
         <form name="form" className="needs-validation" onSubmit={this.handleSubmit} noValidate>
           <div className={'form-group' + (submitted && !email ? ' has-danger' : '')}>

@@ -11,7 +11,7 @@ class HomePage extends React.Component {
     render() {
         const { user, users } = this.props;
         return (
-            <div className="col-md-8 offset-md-2">
+            <div className="col-md-6 offset-md-3">
                 <img src={user.profilePicture} 
                     className="
                         img-fluid 
@@ -21,7 +21,8 @@ class HomePage extends React.Component {
                     alt="Profile Picture"></img>
                 <h1>Hi {user.firstName}!</h1>
                 <p>You're logged in with React & JWT!!</p>
-                <h3>Gitas from secure api end point:</h3>
+                <h3>Registered Gitas:</h3>
+                <p>From secure api endpoint</p>
                 {users.loading && <em>Loading users...</em>}
                 {users.error && <span className="text-danger">ERROR: {users.error}</span>}
                 {users.items &&

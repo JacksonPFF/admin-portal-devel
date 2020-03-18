@@ -15,10 +15,6 @@ export const userService = {
   getAllRegistered,
 };
 
-const users = getAll(endpointConstants.USER_ENDPOINT);
-const gitas = getAll(endpointConstants.GITA_ENDPOINT);
-const registrations = getAll(endpointConstants.REGISTRATION_ENDPOINT);
-
 function login(email, password) {
   const requestOptions = {
     url: `${config.apiUrl}/auth`,
@@ -56,6 +52,9 @@ function getAll(endpoint) {
 }
 
 function getAllRegistered() {
+  const users = getAll(endpointConstants.USER_ENDPOINT);
+  const gitas = getAll(endpointConstants.GITA_ENDPOINT);
+  const registrations = getAll(endpointConstants.REGISTRATION_ENDPOINT);
 
   return axios.all([users, gitas, registrations]).then(axios.spread((...responses) => {
     const users = responses[0].data;
@@ -71,6 +70,7 @@ function getAllRegistered() {
 
 function errorHandler(error) {
   if (error.response) {
+    const response = error.response;
     if (response.statusText !== 'OK') {
       if (response.status === 401) {
         // auto logout if 401 response returned from api
