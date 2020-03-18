@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import { userActions } from '../_actions';
-//import { endpointConstants } from '../_constants';
 
 class HomePage extends React.Component {
     componentDidMount() {
         this.props.dispatch(userActions.getAll());
-        //this.props.dispatch(userActions.getAll(endpointConstants.USER_ENDPOINT));
-        //this.props.dispatch(userActions.getAll(endpointConstants.REGISTRATION_ENDPOINT));
     }
 
     render() {

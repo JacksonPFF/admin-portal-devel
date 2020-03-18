@@ -1,4 +1,5 @@
 const axios = require('axios');
+const _ = require('lodash');
 
 import config from 'config';
 import { authHeader } from '../_helpers';
@@ -13,6 +14,10 @@ export const userService = {
   getAll,
   getAllRegistered,
 };
+
+const users = getAll(endpointConstants.USER_ENDPOINT);
+const gitas = getAll(endpointConstants.GITA_ENDPOINT);
+const registrations = getAll(endpointConstants.REGISTRATION_ENDPOINT);
 
 function login(email, password) {
   const requestOptions = {
@@ -50,10 +55,6 @@ function getAll(endpoint) {
   return axios(requestOptions)
 }
 
-const users = getAll(endpointConstants.USER_ENDPOINT);
-const gitas = getAll(endpointConstants.GITA_ENDPOINT);
-const registrations = getAll(endpointConstants.REGISTRATION_ENDPOINT);
-
 function getAllRegistered() {
 
   return axios.all([users, gitas, registrations]).then(axios.spread((...responses) => {
@@ -88,19 +89,14 @@ function findRegsiteredGitas(users, gitas, registrations){
   let output = [];
   registrations.forEach(element => { 
     if (element["active"]) {
-      var registered_gita = findById(gitas, element["gita"])
+      var registered_gita = _.find(gitas, ['id', element["gita"]]);
       if (isSerialLegit(registered_gita["serial"])) {
-        var registered_user = findById(users, element["user"])
-        //registered_gita["user"] = registered_user
-        // Not sure if need null check for (element[created]) 
-        output.push(
-          //registered_gita
-          {
-            "serial": registered_gita["serial"].slice(-5),
-            "output": "serial: " + registered_gita["serial"] + " name: " + registered_gita["name"] + "\n    registered by: " + registered_user["username"] + ", " + registered_user["email"] + "\n    on: " + element["created"] + "\n",
-            "csv_output": "s" + registered_gita["serial"] + "," + registered_gita["name"] + "," + registered_user["username"] + "," + registered_user["email"] + "," + element["created"] + "\n"
-          }
-        );
+        var registered_user = _.find(users, ['id', element["user"]]);
+        output.push({
+          "serial": registered_gita["serial"].slice(-5),
+          "output": "serial: " + registered_gita["serial"] + " name: " + registered_gita["name"] + "\n    registered by: " + registered_user["username"] + ", " + registered_user["email"] + "\n    on: " + element["created"] + "\n",
+          "csv_output": "s" + registered_gita["serial"] + "," + registered_gita["name"] + "," + registered_user["username"] + "," + registered_user["email"] + "," + element["created"] + "\n"
+        });
       }
     }
   });
@@ -132,12 +128,4 @@ function isSerialLegit(serial){
   }
 
   return true
-}
-
-function findById(collection, object_id) {
-  for(var i=0; i<collection.length; i++){
-    if ( collection[i]["id"] === object_id ){
-      return collection[i];
-    }
-  }
 }
