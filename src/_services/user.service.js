@@ -2,7 +2,10 @@ const axios = require('axios');
 
 import config from 'config';
 import { authHeader } from '../_helpers';
-import { endpointConstants } from '../_constants';
+import { 
+  endpointConstants,
+  serialConstants,
+} from '../_constants';
 
 export const userService = {
   login,
@@ -10,45 +13,6 @@ export const userService = {
   getAll,
   getAllRegistered,
 };
-
-const test_serials = [
-  "3519100010",
-  "4019100039",
-  "4019100042"
-]
-const old_tour_serials = [
-  // old tour gitas
-  "4319100043",
-  "4319100044",
-  "4319100045",
-  "4319100046",
-  "4319100047",
-  "4319100048",
-  "4319100049",
-  "4319100050"
-]
-
-const filter_serials = [
-  // # b8ta gitas
-  "4319100052",
-  "4319100055",
-  "4319100057",
-  "4319100059",
-  "4319100060",
-  "4319100061",
-  "4319100062",
-  "4919100096",
-  // new tour gitas
-  "4919100095",
-  "0120100108",
-  "0120100111",
-  "0120100113",
-  "0120100114",
-  "0220100121",
-  "0220100122",
-  "0220100124",
-  "0220100125"
-]
 
 function login(email, password) {
   const requestOptions = {
@@ -149,20 +113,21 @@ function isSerialLegit(serial){
     return false 
   }
 
-  if (test_serials.includes(serial)) {
+  if (serialConstants.TEST_SERIALS.includes(serial)) {
     return false
   }
 
   // if args.filter == "none":
   //   return True
-  if (old_tour_serials.includes(serial)) {
+  
+  if (serialConstants.OLD_TOUR_SERIALS.includes(serial)) {
     return false
   }
 
   // if args.filter == "old-tour":
   //   return True
 
-  if (filter_serials.includes(serial)) {
+  if (serialConstants.FILTER_SERIALS.includes(serial)) {
     return false
   }
 
