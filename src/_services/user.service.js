@@ -106,7 +106,7 @@ function findRegsiteredGitas(users, gitas, registrations){
       }
     }
   });
-  output.sort((a, b) => (a["serial"] > b["serial"]) ? 1 : -1)
+  output = _.orderBy(output, ['serial'],['asc']);
   return output 
 }
 

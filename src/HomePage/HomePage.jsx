@@ -29,11 +29,11 @@ function HomePage(props) {
           <ul>
             {users.items.map((user, index) =>
               <li key={user.serial} className="mb-3">
-                <div>{user.output.serial}</div> 
-                <div>{user.output.className}</div>
-                <div>{user.output.registeredByUsername}</div>
-                <div>{user.output.registeredByEmail}</div>
-                <div>{user.output.created}</div>
+                <div><b>Serial:</b> {user.output.serial}</div> 
+                <div><b>Name:</b> {user.output.name}</div>
+                <div><b>Registered by:</b> {user.output.registeredByUsername}</div>
+                <div><b>Email:</b> {user.output.registeredByEmail}</div>
+                <div><b>Date:</b> {user.output.created}</div>
               </li>
             )}
           </ul>
