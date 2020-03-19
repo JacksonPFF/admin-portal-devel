@@ -10,11 +10,13 @@ import { LoginPage } from '../LoginPage';
 function App(props) {
   const { dispatch } = props;
   const { alert } = props;
-  
-  history.listen((location, action) => {
-    // clear alert on location change
-    dispatch(alertActions.clear());
-  });
+
+  useEffect(() => {
+    history.listen((location, action) => {
+      // clear alert on location change
+      dispatch(alertActions.clear());
+    });
+  }, []);
 
   return (
     <div className="jumbotron">
