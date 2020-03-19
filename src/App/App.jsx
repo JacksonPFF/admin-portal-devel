@@ -8,8 +8,7 @@ import { HomePage } from '../HomePage';
 import { LoginPage } from '../LoginPage';
 
 function App(props) {
-  const { dispatch } = props;
-  const { alert } = props;
+  const { alert, dispatch } = props;
 
   useEffect(() => {
     history.listen((location, action) => {

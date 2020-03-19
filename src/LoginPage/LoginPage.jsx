@@ -1,49 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../_actions';
 
 function LoginPage(props) {
-  // constructor(props) {
-  //   super(props);
-
-  //   // reset login status
-  //   this.props.dispatch(userActions.logout());
-
-  //   this.state = {
-  //     email: '',
-  //     password: '',
-  //     submitted: false
-  //   };
-
-  //   this.handleChange = this.handleChange.bind(this);
-  //   this.handleSubmit = this.handleSubmit.bind(this);
-  // }
-
-  // const handleChange(e) {
-  //   const { name, value } = e.target;
-  //   setState({ [name]: value });
-  // }
-
+  const { loggingIn, dispatch } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    dispatch(userActions.logout());
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     event.target.className += " was-validated";
 
     setIsSubmitted(!isSubmitted);
-    //const { email, password } = state;
-    const { dispatch } = props;
-
     if (email && password) {
       dispatch(userActions.login(email, password));
     }
   }
-
-  const { loggingIn } = props;
-  // const { email, password, isSubmitted } = state;
 
   return (
     <div className="col-md-4 offset-md-4">
