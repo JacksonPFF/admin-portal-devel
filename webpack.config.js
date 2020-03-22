@@ -7,18 +7,25 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     module: {
-        rules: [
-            {
-                test: /\.jsx?$/,
-                loader: 'babel-loader'
-            }
-        ]
+      rules: [
+        {
+          test: /\.jsx?$/,
+          loader: 'babel-loader'
+        },
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            'css-loader'
+          ]
+        }
+      ]
     },
     plugins: [new HtmlWebpackPlugin({
-        template: './src/index.html'
+      template: './src/index.html'
     })],
     devServer: {
-        historyApiFallback: true
+      historyApiFallback: true
     },
     externals: {
         // global app config object
