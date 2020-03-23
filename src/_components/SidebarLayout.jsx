@@ -16,7 +16,7 @@ function SidebarLayout(props) {
   return (
     <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <Link to={`${props.match.url}/home`} className="navbar-brand col-sm-3 col-md-2 mr-0">PFF Admin Portal</Link>
+        <Link to={`${props.match.url}`} className="navbar-brand col-sm-3 col-md-2 mr-0">PFF Admin Portal</Link>
         <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" />
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
@@ -51,7 +51,7 @@ function SidebarLayout(props) {
               <hr/>
 
               <ul>
-                <li><Link to={`${props.match.url}/home`}>Home</Link></li>
+                <li><Link to={`${props.match.url}`}>Home</Link></li>
                 <li><Link to={`${props.match.url}/placeholder`}>placeholder</Link></li>
               </ul>
 
@@ -74,8 +74,8 @@ function SidebarLayout(props) {
             </div>
             {/* <div className="jumbotron"> */}
               <div>
-                <Route exact path='/app/home' component={HomePage} />
-                <Route exact path='/app/placeholder' component={dummy} /> 
+                <Route exact path={`${props.match.url}`} component={HomePage} />
+                <Route exact path={`${props.match.url}/placeholder`} component={dummy} /> 
               </div>
             {/* </div> */}
           </main>

@@ -39,9 +39,9 @@ function HomePage(props) {
       </div>
 
       <div className="col-md-6">
-        <h3> Wifi Skip Code </h3>
+        <h4> Wifi Skip Code </h4>
         <p>Updates every 15 seconds</p>
-        <p><b>{ skipCode.data }</b></p>
+        <h1><b>{ skipCode.data }</b></h1>
       </div>
     </div>
   );

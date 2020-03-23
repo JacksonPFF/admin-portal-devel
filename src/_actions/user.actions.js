@@ -16,7 +16,7 @@ function login(email, password) {
             .then(
                 user => { 
                     dispatch(success(user));
-                    history.push('/app/home');
+                    history.push('/app');
                 },
                 error => {
                     dispatch(failure(error));
