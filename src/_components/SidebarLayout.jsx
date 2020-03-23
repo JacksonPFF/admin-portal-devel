@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { topics } from '../_routes';
 import { Navigation } from '../_components';
 import { HomePage } from '../HomePage';
-import '../_css/SidebarLayout.css'
+import '../_css/sidebarLayout.css'
 
 function SidebarLayout(props) {
   const { user, dispatch } = props;
+
+  if (!user) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div>

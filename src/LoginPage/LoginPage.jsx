@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { userActions } from '../_actions';
+import '../_css/login.css'
 
 function LoginPage(props) {
   const { loggingIn, alert, dispatch } = props;
@@ -23,8 +24,8 @@ function LoginPage(props) {
   }
 
   return (
-    <div className="jumbotron">
-      <div className="container">
+    <div className="jumbotron min-vh-100 d-flex">
+      <div className="container d-flex flex-column justify-content-center">
 
         <div className="row">
           <div className="col-md-4 offset-md-4">
@@ -36,7 +37,8 @@ function LoginPage(props) {
 
         <div className="row">
           <div className="col-md-4 offset-md-4">
-            <h2>Login</h2>
+            <h1 className="text-center">Sign In</h1>
+            <p className="text-center mb-4">Welcome to the admin portal!</p>
             <form name="form" className="needs-validation" onSubmit={handleSubmit} noValidate>
               <div className={'form-group' + (isSubmitted && !email ? ' has-danger' : '')}>
                 <label htmlFor="email">Email or Username</label>
@@ -49,7 +51,7 @@ function LoginPage(props) {
                 <div className="invalid-feedback">Password is required</div>
               </div>
               <div className="form-group">
-                <button className="btn btn-primary">Login</button>
+                <button className="btn btn-primary w-100">Login</button>
                 {loggingIn &&
                   <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                 }

@@ -19,8 +19,8 @@ function App(props) {
 
   return (
     <div>
-      <Route exact path='/' component={LoginPage} />
       <Route path='/app' component={SidebarLayout} />
+      <Route exact path='/' component={LoginPage} />
     </div>
   );
 }
