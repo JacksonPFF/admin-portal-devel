@@ -30,11 +30,10 @@ function App(props) {
         </div>
 
         <Router history={history}>
-        <div className="row">
+          <div>
             <PrivateRoute exact path="/" component={HomePage} />
-            
             <Route path="/login" component={LoginPage} />
-        </div>
+          </div>
         </Router>
       </div>
     </div>
