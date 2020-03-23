@@ -11,15 +11,6 @@ function HomePage(props) {
 
   return (
       <div className="col-md-9">
-          <img src={user.profilePicture} 
-              className="
-                  img-fluid 
-                  rounded-circle
-                  w-25
-                  mb-3" 
-              alt="Profile Picture"></img>
-          <h1>Hi {user.firstName}!</h1>
-          <p>You're logged in with React & JWT!!</p>
           <h3>Registered Gitas:</h3>
           <p>From secure api endpoint</p>
           {users.loading && <em>Loading users...</em>}
