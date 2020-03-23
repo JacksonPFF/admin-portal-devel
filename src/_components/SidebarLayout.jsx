@@ -12,7 +12,6 @@ function SidebarLayout(props) {
   return (
     <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        {/* <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#">PFF Admin Portal</a> */}
         <Link to={`${props.match.url}/home`} className="navbar-brand col-sm-3 col-md-2 mr-0">PFF Admin Portal</Link>
         <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" />
         <ul className="navbar-nav px-3">
@@ -34,7 +33,7 @@ function SidebarLayout(props) {
                     <div className="media">
                       <img src={user.profilePicture} 
                           style={{maxWidth: "54px"}} 
-                          class="mr-3 rounded-circle" 
+                          className="mr-3 rounded-circle" 
                           alt="Profile Picture"/>
                       <div className="media-body">
                         <h5 className="mb-0 mt-3">Hi {user.firstName}!</h5>
@@ -49,7 +48,7 @@ function SidebarLayout(props) {
 
               <ul>
                 <li><Link to={`${props.match.url}/home`}>Home</Link></li>
-                <li><Link to={`${props.match.url}/dummy`}>Dummy</Link></li>
+                <li><Link to={`${props.match.url}/placeholder`}>placeholder</Link></li>
               </ul>
 
             </div>
@@ -69,14 +68,12 @@ function SidebarLayout(props) {
                 </button> */}
               </div>
             </div>
-            <div className="jumbotron">
-              <div className="container">
-                <div className="row">
+            {/* <div className="jumbotron"> */}
+              <div>
                 <Route exact path='/app/home' component={HomePage} />
-                <Route exact path='/app/dummy' component={dummy} /> 
-                </div>
+                <Route exact path='/app/placeholder' component={dummy} /> 
               </div>
-            </div>
+            {/* </div> */}
           </main>
 
         </div> {/* end row */}
@@ -88,67 +85,10 @@ function SidebarLayout(props) {
 function dummy(){
   return (
     <div>
-      Dummy 
+      PLACE HOLDER PAGE 
     </div>
   );
 }
-
-
-function Resource ({ match }) {
-  const topic = topics.find(({ id }) => id === match.params.topicId)
-    .resources.find(({ id }) => id === match.params.subId)
-
-  return (
-    <div>
-      <h3>{topic.name}</h3>
-      <p>{topic.description}</p>
-      <a href={topic.url}>More info.</a>
-    </div>
-  )
-}
-
-function Topic ({ match }) {
-  const topic = topics.find(({ id }) => id === match.params.topicId)
-
-  return (
-    <div>
-      <h2>{topic.name}</h2>
-      <p>{topic.description}</p>
-
-      <ul>
-        {topic.resources.map((sub) => (
-          <li key={sub.id}>
-            <Link to={`${match.url}/${sub.id}`}>{sub.name}</Link>
-          </li>
-        ))}
-      </ul>
-
-      <hr />
-
-      <Route path={`${match.path}/:subId`} component={Resource} />
-    </div>
-  )
-}
-
-function Topics ({ match }) {
-  return (
-    <div>
-      <h1>Topics</h1>
-      <ul>
-        {topics.map(({ name, id }) => (
-          <li key={id}>
-            <Link to={`${match.url}/${id}`}>{name}</Link>
-          </li>
-        ))}
-      </ul>
-
-      <hr />
-
-      <Route path={`${match.path}/:topicId`} component={Topic}/>
-    </div>
-  )
-}
-
 
 function mapStateToProps(state) {
   const { authentication } = state;

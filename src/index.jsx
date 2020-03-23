@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { configureStore } from './_helpers';
+import { configureStore, history } from './_helpers';
 import { App } from './App';
 import { Router } from "react-router-dom";
 
