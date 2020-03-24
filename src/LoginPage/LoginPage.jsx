@@ -24,7 +24,7 @@ function LoginPage(props) {
   }
 
   return (
-    <div className="jumbotron min-vh-100 d-flex">
+    <div className="min-vh-100 d-flex">
       <div className="container d-flex flex-column justify-content-center">
 
         <div className="row">

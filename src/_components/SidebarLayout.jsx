@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
+import { Route, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { topics } from '../_routes';
+import { routes } from '../_routes';
 import { Navigation } from '../_components';
 import { HomePage } from '../HomePage';
 import '../_css/sidebarLayout.css'
@@ -11,6 +11,47 @@ function SidebarLayout(props) {
 
   if (!user) {
     return <Redirect to="/" />;
+  }
+
+  function generateLinks() {
+    return (
+      <React.Fragment>
+        {routes.map((route, index) => (
+          <Route
+          key={index}
+          path={`${props.match.url}${route.path}`}
+          exact={true}
+          children={({ match }) => (
+            <li className={match ? "active" : ""}>
+              <Link to={`${props.match.url}${route.path}`}>
+                {route.name}
+              </Link>
+            </li>
+          )}
+        />
+          // <li key={index}>
+          //   <Link to={`${props.match.url}${route.path}`}
+          //         className={props.match ? "active" : ""}>
+          //           {route.name}
+          //   </Link>
+          // </li>
+        ))}
+      </React.Fragment>
+    );
+  }
+
+  function ListItemLink({ to, ...rest }) {
+    return (
+      <Route
+        path={to}
+        exact={true}
+        children={({ match }) => (
+          <li className={match ? "active" : ""}>
+            <Link to={to} {...rest}>{to}</Link>
+          </li>
+        )}
+      />
+    );
   }
 
   return (
@@ -51,8 +92,10 @@ function SidebarLayout(props) {
               <hr/>
 
               <ul>
-                <li><Link to={`${props.match.url}`}>Home</Link></li>
-                <li><Link to={`${props.match.url}/placeholder`}>placeholder</Link></li>
+                {generateLinks()}
+                {/* <ListItemLink to={`${props.match.url}`} />
+                <ListItemLink to={`${props.match.url}/place_holder_1`} />
+                <ListItemLink to={`${props.match.url}/place_holder_2`} /> */}
               </ul>
 
             </div>
@@ -72,24 +115,22 @@ function SidebarLayout(props) {
                 </button> */}
               </div>
             </div>
-            {/* <div className="jumbotron"> */}
-              <div>
-                <Route exact path={`${props.match.url}`} component={HomePage} />
-                <Route exact path={`${props.match.url}/placeholder`} component={dummy} /> 
-              </div>
-            {/* </div> */}
+            <div>
+              <Switch>
+                {routes.map((route, index) => (
+                  <Route
+                    key={index}
+                    path={`${props.match.path}${route.path}`}
+                    exact={route.exact}
+                    children={<route.component />}
+                  />
+                ))}
+              </Switch>
+            </div>
           </main>
 
         </div> {/* end row */}
       </div> {/* end container-fluid */}
-    </div>
-  );
-}
-
-function dummy(){
-  return (
-    <div>
-      PLACE HOLDER PAGE 
     </div>
   );
 }
