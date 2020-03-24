@@ -29,28 +29,8 @@ function SidebarLayout(props) {
             </li>
           )}
         />
-          // <li key={index}>
-          //   <Link to={`${props.match.url}${route.path}`}
-          //         className={props.match ? "active" : ""}>
-          //           {route.name}
-          //   </Link>
-          // </li>
         ))}
       </React.Fragment>
-    );
-  }
-
-  function ListItemLink({ to, ...rest }) {
-    return (
-      <Route
-        path={to}
-        exact={true}
-        children={({ match }) => (
-          <li className={match ? "active" : ""}>
-            <Link to={to} {...rest}>{to}</Link>
-          </li>
-        )}
-      />
     );
   }
 
@@ -93,9 +73,6 @@ function SidebarLayout(props) {
 
               <ul>
                 {generateLinks()}
-                {/* <ListItemLink to={`${props.match.url}`} />
-                <ListItemLink to={`${props.match.url}/place_holder_1`} />
-                <ListItemLink to={`${props.match.url}/place_holder_2`} /> */}
               </ul>
 
             </div>
