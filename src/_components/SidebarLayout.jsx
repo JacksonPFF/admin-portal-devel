@@ -22,8 +22,9 @@ function SidebarLayout(props) {
           path={`${props.match.url}${route.path}`}
           exact={true}
           children={({ match }) => (
-            <li className={match ? "active" : ""}>
-              <Link to={`${props.match.url}${route.path}`}>
+            <li className='nav-item'>
+              <Link className={'nav-link ' + (match ? "active" : "") } 
+                to={`${props.match.url}${route.path}`}>
                 {route.name}
               </Link>
             </li>
@@ -71,7 +72,7 @@ function SidebarLayout(props) {
 
               <hr/>
 
-              <ul>
+              <ul className="nav flex-column">
                 {generateLinks()}
               </ul>
 
