@@ -33,7 +33,7 @@ module.exports = {
         // global app config object
         config: JSON.stringify({
             apiUrl: 'http://localhost:3000'
-            // apiUrl: 'https://api.mygita.com'
+            //  apiUrl: 'https://api.mygita.com'
         })
     }
 }

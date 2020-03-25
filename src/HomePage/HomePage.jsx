@@ -21,7 +21,8 @@ function HomePage(props) {
     let objects = registeredGitas.items; 
     for(var i=0; i<objects.length; i++) {
       for(var key in objects[i].output) {
-        if(objects[i].output[key].toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+        if(objects[i].output[key] && 
+          objects[i].output[key].toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
           results.gitas.push(objects[i]);
           break;
         }

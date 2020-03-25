@@ -19,9 +19,6 @@ export function registeredGitas(state = {}, action) {
         items: [...state.items],
         filteredItems: action.results.gitas
       })  
-    // return {
-      //   filteredItems: action.gitas,
-      // };
     default:
       return state
   }
