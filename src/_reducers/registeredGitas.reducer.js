@@ -8,12 +8,20 @@ export function registeredGitas(state = {}, action) {
       };
     case registeredGitasConstants.GETALL_SUCCESS:
       return {
-        items: action.gitas
+        items: action.gitas,
       };
     case registeredGitasConstants.GETALL_FAILURE:
       return { 
         error: action.error
       };
+    case registeredGitasConstants.GETALL_FILTERED_ITEMS:
+      return Object.assign({}, state, {
+        items: [...state.items],
+        filteredItems: action.results.gitas
+      })  
+    // return {
+      //   filteredItems: action.gitas,
+      // };
     default:
       return state
   }
