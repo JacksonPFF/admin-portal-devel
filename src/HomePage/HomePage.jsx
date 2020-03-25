@@ -5,36 +5,68 @@ import { skipCodeConstants } from '../_constants';
 
 function HomePage(props) {
   const { user, registeredGitas, skipCode, dispatch } = props;
-  const [items, setItems] = useState([]);
-
-  const items_data = [
-    'apple',
-    'computer',
-    'windows',
-    'mouse',
-    'keyboard',
-    'monitor',
-    'smartphone'
-  ];
+  const [regGitasList, setRegGitasList] = useState([]);
 
   useEffect(() => {
     dispatch(registeredGitasActions.getAll());
-    setItems(items_data);
-
     dispatch({ type: skipCodeConstants.SKIPCODE_POLL_START });
     return function cleanup() {
       dispatch({ type: skipCodeConstants.SKIPCODE_POLL_STOP });
-    };
-  }, []);
+    }
+  }, []); // execute only once
 
+  const test_data = [
+    {
+      "serial": "00001",
+      "output": {
+        "serial": "2619000001",
+        "name": "The One Gita",
+        "registeredByUsername": "ring_bearer",
+        "registeredByEmail": "frodo@cc.cc",
+        "created": "2020-03-22T20:03:59.680Z"
+      },
+      "csv_output": "s2619000001,The One Gita,ring_bearer,frodo@cc.cc,2020-03-22T20:03:59.680Z\n"
+    },
+    {
+      "serial": "00003",
+      "output": {
+        "serial": "2619000003",
+        "name": "Barad-dûr",
+        "registeredByUsername": "put_a_ring_on_it",
+        "registeredByEmail": "sauron@cc.cc",
+        "created": "2020-03-22T20:03:59.681Z"
+      },
+      "csv_output": "s2619000003,Barad-dûr,put_a_ring_on_it,sauron@cc.cc,2020-03-22T20:03:59.681Z\n"
+    },
+    {
+      "serial": "00004",
+      "output": {
+        "serial": "2619000004",
+        "name": "Orthanc",
+        "registeredByUsername": "white_hand",
+        "registeredByEmail": "saruman@cc.cc",
+        "created": "2020-03-22T20:03:59.682Z"
+      },
+      "csv_output": "s2619000004,Orthanc,white_hand,saruman@cc.cc,2020-03-22T20:03:59.682Z\n"
+    },
+  ];
+  useEffect(() => {
+    setRegGitasList(test_data);
+  }, []); // execute only once
+  
   function handleSearchInput(e) {
-    var searchText = e.target.value;
-    
-    var filteredItems = items_data.filter(function(item) { // this.props.items.
-        return item.search(searchText) > -1;
-    });
-    
-    setItems(filteredItems);
+    let searchText = e.target.value;
+    let results = [];
+    let objects = registeredGitas.items; 
+    for(var i=0; i<objects.length; i++) {
+      for(var key in objects[i].output) {
+        if(objects[i].output[key].toLowerCase().indexOf(searchText.toLowerCase()) > -1) {
+          results.push(objects[i]);
+          break;
+        }
+      }
+    }
+    setRegGitasList(results);
   }
 
   return (
@@ -43,27 +75,18 @@ function HomePage(props) {
         <div className="sticky-top">
           <h4>Registered Gitas:</h4>
           <p>From secure api endpoint</p>
-          
-          <input className="filter form-control 
-                            mb-3" 
-            onInput={handleSearchInput} 
-            type="text" 
-            placeholder="Search for..."/>
+
+          <input className="filter form-control mb-3" 
+              onInput={handleSearchInput} 
+              type="text" 
+              placeholder="Search for..."/>
 
           {registeredGitas.loading && <em>Loading registered gitas...</em>}
           {registeredGitas.error && <span className="text-danger">ERROR: {registeredGitas.error}</span>}
           {registeredGitas.items &&
             <div>
-              <ul className="filtered-stuff">
-                {items.map((item, index) => // this.state.items.
-                  <li key={index} className="list-group-item">
-                    {`${item}`}
-                  </li>
-                )}
-              </ul>
-              
               <ul className="registered-gitas">
-                {registeredGitas.items.map((gita, index) =>
+                {regGitasList.map((gita, index) =>
                   <li key={gita.serial} className="mb-3">
                     <div><b>Serial:</b> {gita.output.serial}</div> 
                     <div><b>Name:</b> {gita.output.name}</div>
