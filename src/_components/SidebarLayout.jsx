@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Link, Redirect, Switch } from 'react-router-dom';
+import React from 'react';
+import {
+  Route,
+  Link,
+  Redirect,
+  Switch,
+} from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { routes } from '../_routes';
-import { Navigation } from '../_components';
-import { HomePage } from '../HomePage';
-import '../_css/sidebarLayout.css'
+import '../_css/sidebarLayout.css';
 
 function SidebarLayout(props) {
-  const { user, dispatch } = props;
+  const { user } = props;
 
   if (!user) {
     return <Redirect to="/" />;
@@ -16,20 +21,22 @@ function SidebarLayout(props) {
   function generateLinks() {
     return (
       <React.Fragment>
-        {routes.map((route, index) => (
+        {routes.map((route) => (
           <Route
-          key={index}
-          path={`${props.match.url}${route.path}`}
-          exact={true}
-          children={({ match }) => (
-            <li className='nav-item'>
-              <Link className={'nav-link ' + (match ? "active" : "") } 
-                to={`${props.match.url}${route.path}`}>
-                {route.name}
-              </Link>
-            </li>
-          )}
-        />
+            key={route.name}
+            path={`${props.match.url}${route.path}`}
+            exact={true}
+            children={({ match }) => (
+              <li className="nav-item">
+                <Link
+                  className={`nav-link ${match ? 'active' : ''}`}
+                  to={`${props.match.url}${route.path}`}
+                >
+                  {route.name}
+                </Link>
+              </li>
+            )}
+          />
         ))}
       </React.Fragment>
     );
@@ -38,31 +45,39 @@ function SidebarLayout(props) {
   return (
     <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <Link to={`${props.match.url}`} className="navbar-brand col-sm-3 col-md-2 mr-0">PFF Admin Portal</Link>
+        <Link to={`${props.match.url}`} className="navbar-brand col-sm-3 col-md-2 mr-0">
+          PFF Admin Portal
+        </Link>
         <input className="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" />
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap">
-            <Link to="/" className="nav-link">Sign out</Link>
+            <Link to="/" className="nav-link">
+              Sign out
+            </Link>
           </li>
         </ul>
       </nav>
-  
+
       <div className="container-fluid">
         <div className="row">
-          
+
           <nav className="col-md-2 d-none d-md-block bg-light sidebar">
             <div className="sidebar-sticky pt-3">
-            
+
               <div className="col-md-12">
                 <div className="row">
                   <div className="col-md-12">
                     <div className="media">
-                      <img src={user.profilePicture} 
-                          style={{maxWidth: "54px"}} 
-                          className="mr-3 rounded-circle" 
-                          alt="Profile Picture"/>
+                      <img
+                        src={user.profilePicture}
+                        style={{ maxWidth: '54px' }}
+                        className="mr-3 rounded-circle"
+                        alt="Profile"
+                      />
                       <div className="media-body">
-                        <h5 className="mb-0 mt-3">Hi {user.firstName}!</h5>
+                        <h5 className="mb-0 mt-3">
+                          Hi {user.firstName}!
+                        </h5>
                         {/* <small>You're logged in with React & JWT</small> */}
                       </div>
                     </div>
@@ -70,8 +85,8 @@ function SidebarLayout(props) {
                 </div>
               </div>
 
-              <hr/>
-
+              <hr />
+              {/* Side bar nav links */}
               <ul className="nav flex-column">
                 {generateLinks()}
               </ul>
@@ -79,14 +94,15 @@ function SidebarLayout(props) {
             </div>
           </nav>
 
+          {/* main content, display views here */}
           <main role="main" className="col-md-9 ml-sm-auto col-lg-10 px-4 mb-5">
             <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
               <h1 className="h2 mt-3">Dashboard</h1>
               <div className="btn-toolbar mb-2 mb-md-0">
-                <div className="btn-group">
-                  <button className="btn btn-sm btn-outline-secondary">Share</button>
-                  <button className="btn btn-sm btn-outline-secondary">Export</button>
-                </div>
+                {/* <div className="btn-group">
+                  <button className="btn btn-sm btn-outline-secondary" type="button">Share</button>
+                  <button className="btn btn-sm btn-outline-secondary" type="button">Export</button>
+                </div> */}
                 {/* <button className="btn btn-sm btn-outline-secondary dropdown-toggle">
                   <span data-feather="calendar"></span>
                   This week
@@ -94,10 +110,11 @@ function SidebarLayout(props) {
               </div>
             </div>
             <div>
+              {/* render routes that correspond to the links we generated earlier */}
               <Switch>
-                {routes.map((route, index) => (
+                {routes.map((route) => (
                   <Route
-                    key={index}
+                    key={route.name}
                     path={`${props.match.path}${route.path}`}
                     exact={route.exact}
                     children={<route.component />}
@@ -107,17 +124,28 @@ function SidebarLayout(props) {
             </div>
           </main>
 
-        </div> {/* end row */}
-      </div> {/* end container-fluid */}
+        </div>
+        {/* end row */}
+      </div>
+      {/* end container-fluid */}
     </div>
   );
 }
+
+SidebarLayout.propTypes = {
+  user: PropTypes.shape({
+    profilePicture: PropTypes.string,
+    firstName: PropTypes.string,
+  }).isRequired,
+
+  match: ReactRouterPropTypes.match.isRequired,
+};
 
 function mapStateToProps(state) {
   const { authentication } = state;
   const { user } = authentication;
   return {
-      user,
+    user,
   };
 }
 

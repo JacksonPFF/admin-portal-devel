@@ -11,16 +11,16 @@ export const skipCode = (state = initialState, action) => {
       return {
         ...state,
         polling: true,
-      }
+      };
     case skipCodeConstants.SKIPCODE_POLL_STOP:
       return {
         ...state,
         polling: false,
-      }
+      };
     case skipCodeConstants.SKIPCODE_POLL_SUCCESS:
       return {
         ...state,
-        data: action.skipCode
+        data: action.skipCode,
       };
     default:
       return state;

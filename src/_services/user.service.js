@@ -1,36 +1,51 @@
+import config from 'config';
+
 const axios = require('axios');
 
-import config from 'config';
-import { authHeader, errorHandler } from '../_helpers';
-import { endpointConstants } from '../_constants';
-
-export const userService = {
-  login,
-  logout,
+const logout = () => {
+  // remove user from local storage to log user out
+  localStorage.removeItem('user');
 };
 
-function login(email, password) {
+const errorHandler = (error) => {
+  if (error.response) {
+    const { response } = error;
+    if (response.statusText !== 'OK') {
+      if (response.status === 401) {
+        // auto logout if 401 response returned from api
+        logout();
+        // location.reload(true);
+      }
+    }
+    const errorMessage = response.data.message || response.statusText;
+    return Promise.reject(errorMessage);
+  }
+  return Promise.reject(error);
+};
+
+const login = (email, password) => {
   const requestOptions = {
     url: `${config.apiUrl}/auth`,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    data: JSON.stringify({ email, password })
+    data: JSON.stringify({ email, password }),
   };
 
   return axios(requestOptions)
-    //.then(handleResponse)
-    .then(response => {
-      const user = response.data.user;
+    .then((response) => {
+      const { user } = response.data;
       user.token = response.data.token;
-      // store user details and jwt token in local storage to keep user logged in between page refreshes
+      // store user details and jwt token in local storage to
+      // keep user logged in between page refreshes
       localStorage.setItem('user', JSON.stringify(user));
 
       return user;
     })
-    .catch(error => errorHandler(error));
-}
+    .catch((error) => errorHandler(error));
+};
 
-function logout() {
-  // remove user from local storage to log user out
-  localStorage.removeItem('user');
-}
+export const userService = {
+  login,
+  logout,
+  errorHandler,
+};

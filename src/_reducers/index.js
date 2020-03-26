@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   users,
   registeredGitas,
   alert,
-  skipCode
+  skipCode,
 });
 
 export default rootReducer;

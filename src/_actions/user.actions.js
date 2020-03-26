@@ -1,36 +1,37 @@
 import { userConstants } from '../_constants';
 import { userService } from '../_services';
-import { alertActions } from './';
+import { alertActions } from '.';
 import { history } from '../_helpers';
 
-export const userActions = {
-    login,
-    logout,
-};
-
+// consider renaming this module to "auth.actions"
 function login(email, password) {
-    return dispatch => {
-        dispatch(request({ email }));
+  function request(user) { return { type: userConstants.LOGIN_REQUEST, user }; }
+  function success(user) { return { type: userConstants.LOGIN_SUCCESS, user }; }
+  function failure(error) { return { type: userConstants.LOGIN_FAILURE, error }; }
 
-        userService.login(email, password)
-            .then(
-                user => { 
-                    dispatch(success(user));
-                    history.push('/app');
-                },
-                error => {
-                    dispatch(failure(error));
-                    dispatch(alertActions.error(error));
-                }
-            );
-    };
+  return (dispatch) => {
+    dispatch(request({ email }));
 
-    function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+    userService.login(email, password)
+      .then(
+        (user) => {
+          dispatch(success(user));
+          history.push('/app');
+        },
+        (error) => {
+          dispatch(failure(error));
+          dispatch(alertActions.error(error));
+        },
+      );
+  };
 }
 
 function logout() {
-    userService.logout();
-    return { type: userConstants.LOGOUT };
+  userService.logout();
+  return { type: userConstants.LOGOUT };
 }
+
+export const userActions = {
+  login,
+  logout,
+};

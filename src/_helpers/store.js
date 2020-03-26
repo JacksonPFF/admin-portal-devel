@@ -12,12 +12,12 @@ export function configureStore() {
   const store = createStore(
     rootReducer,
     applyMiddleware(
-        thunkMiddleware,
-        epicMiddleware,
-        loggerMiddleware
-    )
+      thunkMiddleware,
+      epicMiddleware,
+      loggerMiddleware,
+    ),
   );
   epicMiddleware.run(rootEpic);
 
-  return store
+  return store;
 }
